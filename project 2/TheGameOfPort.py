@@ -23,6 +23,12 @@ buttons2=pygame.image.load('button2.png')
 buttons3=pygame.image.load('button3.png')
 pijl=pygame.image.load('pijl.png')
 pijl2=pygame.image.load('pijl2.png')
+play_button=pygame.image.load('play.png')
+homebutton4=pygame.draw.rect(screen,black,[800,600,200,70])
+pause_button1=pygame.image.load('pause1.png')
+pauses=pygame.image.load('pauses.png')
+homebutton4=pygame.image.load('homebutton4.png')
+pausesbutton4=pygame.image.load('pausebutton4.png')
 pygame.display.set_caption("The Game of port")
 
 rulesbuttons1=pygame.draw.rect(screen,color2,[1650,910,50,40])
@@ -30,6 +36,7 @@ rulesbuttons2=pygame.draw.rect(screen,color1,[1700,900,10,73])
 rulesbuttons3=pygame.draw.rect(screen,black,[1710,905,10,60])
 rulesbuttons4= pygame.draw.rect(screen,black,[1710,915,20,30])
 rulesbuttons5=pygame.draw.rect(screen,color2,[1710,930,50,15])
+pausebuttons4=pygame.draw.rect(screen,color3,[1005,363,200,70])
 
 
         
@@ -38,12 +45,13 @@ button1=pygame.draw.rect(screen,black,[800,300,200,70])
 button2=pygame.draw.rect(screen,color2,[800,400,200,70])
 button3=pygame.draw.rect(screen,color3,[800,500,200,70])
 button4=pygame.draw.rect(screen,color3,[1813,2,100,50])
-button5=pygame.draw.rect(screen,color2,[720,570,200,70])
-button6=pygame.draw.rect(screen,color3,[950,570,200,70])
+button5=pygame.draw.rect(screen,color3,[575,363,200,70])
+button6=pygame.draw.rect(screen,color2,[790,363,200,70])
 button7=pygame.draw.rect(screen,color3,[1813,2,100,50])
 button8=pygame.draw.rect(screen,color3,[1813,2,100,50])
 rulesbutton2=pygame.draw.rect(screen,color2,[1600,900,200,70])
 rulesbutton1=pygame.draw.rect(screen,color3,[100,900,200,70])
+homebuttons4=pygame.draw.rect(screen,black,[800,600,200,70])
 
 pygame.display.update()
 
@@ -53,7 +61,8 @@ def game_loop():
     game=True
     while game:
         screen.blit(gameboard,(0,0))
-        pygame.draw.rect(screen,color3,[1813,2,100,50])
+        pygame.draw.rect(screen,color3,[1843,2,70,63])
+        screen.blit(pause_button1,(1843,2))
         pause_button(button4)
         pygame.display.update()
         for event in pygame.event.get():
@@ -64,13 +73,17 @@ def game_loop():
 def pause_loop():
     game=True
     while game:
-        screen.blit(pause,(700,400))
-        pygame.draw.rect(screen,color2,[720,570,200,70])
-        pygame.draw.rect(screen,color3,[950,570,200,70])
+        screen.fill((98,73,2))
+        pygame.draw.rect(screen,color2,[790,363,200,70])
+        pygame.draw.rect(screen,color3,[575,363,200,70])
+        pygame.draw.rect(screen,color3,[1005,363,200,70])
+        screen.blit(pauses,(0,0))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and button5.collidepoint(pygame.mouse.get_pos()):
                 game_main_menu()
+            if event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and pausebuttons4.collidepoint(pygame.mouse.get_pos()):
+                rules_screen1()
             if event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and button6.collidepoint(pygame.mouse.get_pos()):
                 game= False
             if event.type == pygame.QUIT:
@@ -259,6 +272,8 @@ def game_main_menu():
         screen.blit(buttons2,(800,400))
         pygame.draw.rect(screen,color3,[800,500,200,70])
         screen.blit(buttons1,(800,500))
+        pygame.draw.rect(screen,black,[800,600,200,70])
+        screen.blit(homebutton4,(800,600))
         pygame.display.update()
     
         for event in pygame.event.get():
@@ -268,6 +283,10 @@ def game_main_menu():
                 rules_screen1()
             elif event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and button3.collidepoint(pygame.mouse.get_pos()):
                 see_highscores()
+            elif event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and homebuttons4.collidepoint(pygame.mouse.get_pos()):
+                gameExit= True
+                pygame.quit()
+                quit()
             elif event.type == pygame.QUIT:
                 gameExit= True
                 pygame.quit()
