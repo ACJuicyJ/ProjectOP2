@@ -231,24 +231,7 @@ def rules_screen4():
                 quit()
     
 
-pos_mouse=pygame.mouse.get_pos()
-def game_rules():
-    rules= True
-    while rules:
-        screen.blit(rules1,(0,0))
-        pygame.draw.rect(screen,color3,[1813,2,100,50])
-        pygame.draw.rect(screen,color2,[1600,900,100,35])
-        pygame.draw.rect(screen,color3,[100,900,200,70])
-        pygame.display.update()
-        for event in pygame.event.get():
-            if event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and button7.collidepoint(pygame.mouse.get_pos()):
-                game_main_menu()
-            if event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and rulesbutton2.collidepoint(pygame.mouse.get_pos()):
-                rules_screen1()
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-                
+
 def see_highscores():
     see_highscores= True
     while see_highscores:
@@ -279,10 +262,19 @@ def game_main_menu():
         for event in pygame.event.get():
             if event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and button1.collidepoint(pygame.mouse.get_pos()):
                 game_loop()
+            elif button1.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(screen,black,[800,600,200,70])
+
             elif event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and button2.collidepoint(pygame.mouse.get_pos()):
                 rules_screen1()
+            if button2.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(screen,black,[800,600,200,70])
+
             elif event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and button3.collidepoint(pygame.mouse.get_pos()):
                 see_highscores()
+            if button3.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(screen,black,[800,600,200,70])
+
             elif event.type== pygame.MOUSEBUTTONDOWN and event.button==1 and homebuttons4.collidepoint(pygame.mouse.get_pos()):
                 gameExit= True
                 pygame.quit()
