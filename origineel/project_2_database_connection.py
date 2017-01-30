@@ -44,5 +44,13 @@ def insert_score(name, score):
     interaction("Insert Into highscore(score, name) Values ('{}' , '{}')"
                            .format(score, name))
 
-insert_score('john', 500)
+insert_score('test2', 500)
 
+
+#om de correcte database te maken voer de volgende sql syntax in
+#create database project_2_highscore
+# en dan
+#create table highscore(
+#    score integer,
+#    name TEXT
+#);
