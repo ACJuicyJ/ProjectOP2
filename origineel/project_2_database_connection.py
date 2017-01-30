@@ -1,4 +1,6 @@
 import psycopg2
+import functions
+
 
 def interaction(testing123):
     # interactie opzetten dmv .cursor
@@ -34,17 +36,16 @@ def display_scores():
 
 # show highest highscore from database
 def display_top_score():
-    result = interact_with_database("SELECT * FROM score ORDER BY score")[0][1]
+    print(functions.player1.name())
+    result = interaction("SELECT * FROM score ORDER BY score")[0][1]
     return result
-
 
 
 
 def insert_score(name, score):
     interaction("Insert Into highscore(score, name) Values ('{}' , '{}')"
                            .format(score, name))
-
-insert_score('test2', 500)
+insert_score(functions.player1.name, 0)
 
 
 #om de correcte database te maken voer de volgende sql syntax in
