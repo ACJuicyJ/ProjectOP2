@@ -2,7 +2,7 @@ import psycopg2
 
 def interaction(testing123):
     # interactie opzetten dmv .cursor
-    conn = psycopg2.connect("dbname=project_2_highscore user=student")
+    conn = psycopg2.connect(" dbname=project_2_highscore user=postgres password = 123456 ")
     cursor = conn.cursor()
 
     cursor.execute(testing123)
@@ -36,3 +36,13 @@ def display_scores():
 def display_top_score():
     result = interact_with_database("SELECT * FROM score ORDER BY score")[0][1]
     return result
+
+
+
+
+def insert_score(name, score):
+    interaction("Insert Into highscore(score, name) Values ('{}' , '{}')"
+                           .format(score, name))
+
+insert_score('john', 500)
+
