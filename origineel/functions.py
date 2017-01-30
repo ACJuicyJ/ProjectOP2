@@ -11,6 +11,9 @@ font = pygame.font.Font(text_type, 25)
 boot= pygame.image.load('Boot-1-offense-mode.png')
 boot2= pygame.image.load('Boot-2-offense-mode.png')
 boot3= pygame.image.load('Boot-3-offense-mode.png')
+player2_boot= pygame.image.load('Player-1-Boot-1-offense-mode.png')
+player2_boot2= pygame.image.load('Player-2-Boot-2-offense-mode.png')
+player2_boot3= pygame.image.load('Player-2-Boot-4-offense-mode.png')
 gameboard= pygame.image.load('gameboard.png')
 
 
@@ -85,7 +88,7 @@ class Boat:
                 if move_key[pygame.K_LEFT]:
                     self.p_x -= 37
                     self.turn -= 1
-            elif self.p_y <600 and self.p_y > 109:
+            if self.p_y <600 and self.p_y > 109:
                 if move_key[pygame.K_UP]:
                     self.p_y = self.p_y + 37
                     self.turn -= 1
@@ -134,10 +137,12 @@ def choose_name():
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        screen.blit(font.render('Type your name', 1, (0, 0, 0)), (600, 200))
+
         if first_player == True:
+            screen.blit(font.render('Player 1: Type your name', 1, (0, 0, 0)), (600, 200))
             screen.blit(font.render(player1.name, 1, (0, 0, 0)), (650, 300))
         elif first_player == False:
+            screen.blit(font.render('Player 2: Type your name', 1, (0, 0, 0)), (600, 200))
             screen.blit(font.render(player2.name, 1, (0, 0, 0)), (650, 300))
 
 
@@ -165,11 +170,11 @@ def intro_game():
                 screen.blit(boot3, (x, y))
         elif len(player2.boats) < 4:
             if len(player2.boats) < 1:
-                screen.blit(boot, (x, 637))
+                screen.blit(player2_boot, (x, 637))
             elif len(player2.boats) < 3:
-                screen.blit(boot2, (x, 608))
+                screen.blit(player2_boot2, (x, 608))
             elif player2.boats.count(boot3) < 1:
-                screen.blit(boot3, (x, 579))
+                screen.blit(player2_boot3, (x, 579))
         move_key = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -192,42 +197,43 @@ def intro_game():
             if len(player1.boats) < 4:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and surface.collidepoint(pygame.mouse.get_pos()):
                     if len(player1.boats) == 0:
-                        player1.boats.append(Boat(boot,x,y,2,1,20,100,1))
+                        player1.boats.append(Boat(boot,x,y,2,1,20,100,3))
                     elif len(player1.boats) < 2:
                         player1.boats.append(Boat(boot2,x,y,3,2,20, 210,2))
                     elif len(player1.boats) < 3:
                         player1.boats.append(Boat(boot2, x,y,3,3,20, 320,2))
                     elif player1.boats.count(boot3) < 1:
-                        player1.boats.append(Boat(boot3, x,y,4,4,20, 430,3))
+                        player1.boats.append(Boat(boot3, x,y,4,4,20, 430,1))
             elif len(player2.boats) < 4:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and surface.collidepoint(pygame.mouse.get_pos()):
                     if len(player2.boats) == 0:
-                        player2.boats.append(Boat(boot,x,637,2,1,1000, 100,1))
+                        player2.boats.append(Boat(player2_boot,x,637,2,1,1000, 100,3))
                     elif len(player2.boats) < 2:
-                        player2.boats.append(Boat(boot2,x,608,3,2,1000, 210,2))
+                        player2.boats.append(Boat(player2_boot2,x,608,3,2,1000, 210,2))
                     elif len(player2.boats) < 3:
-                        player2.boats.append(Boat(boot2, x, 608,3,3,1000, 320,2))
-                    elif player2.boats.count(boot3) < 1:
-                        player2.boats.append(Boat(boot3, x, 579,4,4, 1000, 430,3))
+                        player2.boats.append(Boat(player2_boot2, x, 608,3,3,1000, 320,2))
+                    elif player2.boats.count(player2_boot3) < 1:
+                        player2.boats.append(Boat(player2_boot3, x, 579,4,4, 1000, 430,1))
         for boat in player1.boats:
             screen.blit(boat.image,(boat.p_x,boat.p_y), boat.show_state())
         for boat in player2.boats:
             screen.blit(boat.image,(boat.p_x,boat.p_y),  boat.show_state())
         if len(player1.boats) == 4 and len(player2.boats) == 4:
             if player1.boats[0].turn > 0:
-                move_boat((0,80,80),50,700,80,50,player1,0)
-                move_boat((90, 90, 0), 50, 650, 80, 50, player1, 1)
-                move_boat((50, 100, 0), 50, 600, 80, 50, player1, 2)
-                move_boat((60, 60, 60), 50, 550, 80, 50, player1, 3)
+                move_boat((0,80,80),50,700,80,50,player1,0,'Player1Boat1Button.png')
+                move_boat((90, 90, 0), 50, 650, 80, 50, player1, 1,'Player1Boat2Button.png' )
+                move_boat((50, 100, 0), 50, 600, 80, 50, player1, 2,'Player1Boat3Button.png' )
+                move_boat((60, 60, 60), 50, 550, 80, 50, player1, 3, 'Player1Boat4Button.png')
                 if player1.boats[0].turn == 0:
-                    player2.boats[0].turn== player2.boats[0].moves
+                    player2.boats[0].turn = player2.boats[0].moves
             elif player2.boats[0].turn > 0:
-                move_boat((0,80,80),1000,700,80,50,player2,0)
-                move_boat((90, 90, 0), 1000, 650, 80, 50, player2, 1)
-                move_boat((50, 100, 0), 1000, 600, 80, 50, player2, 2)
-                move_boat((60, 60, 60), 1000, 550, 80, 50, player2, 3)
+                move_boat((0,80,80),1000,700,80,50,player2,0,'Player1Boat1Button.png')
+                move_boat((90, 90, 0), 1000, 650, 80, 50, player2, 1, 'Player1Boat2Button.png')
+                move_boat((50, 100, 0), 1000, 600, 80, 50, player2, 2, 'Player1Boat3Button.png')
+                move_boat((60, 60, 60), 1000, 550, 80, 50, player2, 3, 'Player1Boat4Button.png')
                 if player2.boats[0].turn == 0:
-                    player1.boats[0].turn== player1.boats[0].moves
+                    player1.boats[0].turn = player1.boats[0].moves
+
         pygame.display.flip()
 
 
@@ -235,36 +241,12 @@ def intro_game():
 
 
 
-def move_boat(color,px,py,h,w,player,boat_x):
+def move_boat(color,px,py,h,w,player,boat_x, image):
     boot=pygame.draw.rect(screen,color,[px,py, h,w])
+    insert_image(image, px, py)
     if boot.collidepoint(pygame.mouse.get_pos()):
         player.boats[boat_x].move()
 
-
-def game():
-    if len(player1.boats) == 4 and len(player2.boats) == 4:
-        game= True
-        while game:
-            pause_button = pygame.image.load('pause_button.png').get_rect(x=1442, y=0)
-            move_key = pygame.key.get_pressed()
-            if player1.boats[0].turn > 0:
-                move_boat((0,80,80),50,700,80,50,player1,0)
-                move_boat((90, 90, 0), 50, 650, 80, 50, player1, 1)
-                move_boat((50, 100, 0), 50, 600, 80, 50, player1, 2)
-                move_boat((60, 60, 60), 50, 550, 80, 50, player1, 3)
-
-            elif player2.boats[0].turn > 0:
-                move_boat((0,80,80),1000,700,80,50,player2,0)
-                move_boat((90, 90, 0), 1000, 650, 80, 50, player2, 1)
-                move_boat((50, 100, 0), 1000, 600, 80, 50, player2, 2)
-                move_boat((60, 60, 60), 1000, 550, 80, 50, player2, 3)
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and pause_button.collidepoint(pygame.mouse.get_pos()):
-                pause_loop()
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-        pygame.display.flip()
 
 
 def see_highscores():
@@ -287,14 +269,76 @@ def pause_loop():
     while pause:
         insert_image('pauses1.png', 0, 0)
         insert_image('pause_scherm.png', 330, 200)
-        button((0, 89, 90), 390, 353, 180, 65, 'pause1.png',None, events)
-        button((0, 89, 90), 590, 353, 180, 65,'pause3.png',None,events)
+        button((0, 89, 90), 590, 353, 180, 65,'pause3.png',help,events)
+        insert_image('pause1.png', 390, 353)
+        exit_button= pygame.image.load('pause1.png').get_rect(x=390, y=353)
         insert_image('pause2.png', 800, 353)
         resume_button = pygame.image.load('pause2.png').get_rect(x=800, y=353)
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and resume_button.collidepoint(pygame.mouse.get_pos()):
                 pause= False
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
+                player1.name= " "
+                player2.name = " "
+                Game()
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+
+def Game():
+    Main_menu=True
+    while Main_menu:
+        events = pygame.event.get()
+        insert_image('back_button.png', 1379, 0)
+        insert_image('MenuBackgound.jpg', 0,0)
+        button((0, 89, 90), 650, 300, 200, 70, 'button3.png',intro_game, events)
+        button((0, 89, 90), 650, 400, 200, 70, 'button2.png',None, events)
+        button((0, 89, 90), 650, 500, 200, 70, 'button1.png',see_highscores,events)
+        button((0, 89, 90), 650, 600, 200, 70, 'button4.png',exit, events)
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        pygame.display.update()
+
+
+def help():
+    rules_page1 = pygame.image.load('rules.png')
+    next_button = pygame.image.load('pijl1.png').get_rect(x=1100, y=600)
+    exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
+    rules = True
+    while rules:
+        screen.fill((255,255,255))
+        screen.blit(rules_page1,(500,0))
+        insert_image('back_button.png', 1379, 0)
+        insert_image('pijl1.png', 1100, 600)
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
+                rules= False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and next_button.collidepoint(pygame.mouse.get_pos()):
+                rules_page2()
+            elif event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        pygame.display.update()
+
+def rules_page2():
+    rules_pages2 = pygame.image.load('rules2.png')
+    previous_button = pygame.image.load('pijl2.png').get_rect(x=200, y=600)
+    exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
+    rules = True
+    while rules:
+        screen.fill((255,255,255))
+        screen.blit(rules_pages2, (500, 0))
+        insert_image('back_button.png', 1379, 0)
+        insert_image('pijl2.png', 200, 600)
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
+                rules= False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and previous_button.collidepoint(pygame.mouse.get_pos()):
+                help()
+            elif event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        pygame.display.update()
