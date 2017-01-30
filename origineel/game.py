@@ -23,4 +23,3 @@ def Game():
                 quit()
         pygame.display.update()
 Game()
-
