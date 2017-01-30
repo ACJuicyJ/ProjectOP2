@@ -46,7 +46,8 @@ def insert_score(name, score):
     interaction("Insert Into highscore(score, name) Values ('{}' , '{}')"
                            .format(score, name))
 insert_score(functions.player1.name, 0)
-
+#statische waarden kan hij in de db zetten maar geen functie of reference zoals bijv. functions.player1.name
+cursor.execute("INSERT INTO table highscore (%s, %s)", (functions.player1.name, functions.player1.score ))
 
 #om de correcte database te maken voer de volgende sql syntax in
 #create database project_2_highscore

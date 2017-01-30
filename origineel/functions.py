@@ -33,6 +33,7 @@ def insert_image(image, positionx, positiony):
 class Player:
     def __init__(self):
         self.name = " "
+        self.score = 0
         self.boats = []
     def show_name(self, x, y):
         screen.blit(font.render(self.name,1,(0,0,0)), (x, y))
