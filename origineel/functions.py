@@ -84,7 +84,7 @@ class Boat:
                 if move_key[pygame.K_LEFT]:
                     self.p_x -= 37
                     self.turn -= 1
-            if self.p_y <600 and self.p_y > 109:
+            elif self.p_y <600 and self.p_y > 109:
                 if move_key[pygame.K_UP]:
                     self.p_y = self.p_y + 37
                     self.turn -= 1
@@ -213,25 +213,20 @@ def intro_game():
         for boat in player2.boats:
             screen.blit(boat.image,(boat.p_x,boat.p_y),  boat.show_state())
         if len(player1.boats) == 4 and len(player2.boats) == 4:
-            for boat1 in player1.boats:
-                if boat1.turn > 0:
-                    move_boat((0,80,80),50,700,80,50,player1,0)
-                    move_boat((90, 90, 0), 50, 650, 80, 50, player1, 1)
-                    move_boat((50, 100, 0), 50, 600, 80, 50, player1, 2)
-                    move_boat((60, 60, 60), 50, 550, 80, 50, player1, 3)
-                    if player1.boats[0].turn == 0:
-                else
-                    for boat2 in player2.boats:
-                        if boat2.turn < 0:
-
+            if player1.boats[0].turn > 0:
+                move_boat((0,80,80),50,700,80,50,player1,0)
+                move_boat((90, 90, 0), 50, 650, 80, 50, player1, 1)
+                move_boat((50, 100, 0), 50, 600, 80, 50, player1, 2)
+                move_boat((60, 60, 60), 50, 550, 80, 50, player1, 3)
+                if player1.boats[0].turn == 0:
+                    player2.boats[0].turn== player2.boats[0].moves
             elif player2.boats[0].turn > 0:
                 move_boat((0,80,80),1000,700,80,50,player2,0)
                 move_boat((90, 90, 0), 1000, 650, 80, 50, player2, 1)
                 move_boat((50, 100, 0), 1000, 600, 80, 50, player2, 2)
                 move_boat((60, 60, 60), 1000, 550, 80, 50, player2, 3)
                 if player2.boats[0].turn == 0:
-                    print ('Test')
-                    player1.boats[0].turn == player1.boats[0].moves
+                    player1.boats[0].turn== player1.boats[0].moves
         pygame.display.flip()
 
 
