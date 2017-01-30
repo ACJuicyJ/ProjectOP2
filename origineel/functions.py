@@ -10,12 +10,13 @@ text_type=pygame.font.get_default_font()
 font = pygame.font.Font(text_type, 25)
 boot= pygame.image.load('Boot-1-offense-mode.png')
 boot2= pygame.image.load('Boot-2-offense-mode.png')
-boot3= pygame.image.load('Boot-3-offense-mode.png')
+boot3= pygame.image.load('Boot-2.1-offense-mode.png')
+boot4= pygame.image.load('Boot-3-offense-mode.png')
 player2_boot= pygame.image.load('Player-1-Boot-1-offense-mode.png')
 player2_boot2= pygame.image.load('Player-2-Boot-2-offense-mode.png')
-player2_boot3= pygame.image.load('Player-2-Boot-4-offense-mode.png')
+player2_boot3= pygame.image.load('Player-2-Boot-3-offense-mode.png')
+player2_boot4= pygame.image.load('Player-2-Boot-4-offense-mode.png')
 gameboard= pygame.image.load('gameboard.png')
-
 
 def button(color,p_x,p_y,width,height,image,loop, events):
     buttons=pygame.draw.rect(screen,color,[p_x,p_y,width,height])
@@ -164,17 +165,21 @@ def intro_game():
         if len(player1.boats) < 4:
             if len(player1.boats) < 1:
                 screen.blit(boot, (x, y))
-            elif len(player1.boats) < 3:
+            elif len(player1.boats) < 2:
                 screen.blit(boot2, (x, y))
-            elif player1.boats.count(boot3) < 1:
+            elif len(player1.boats) < 3:
                 screen.blit(boot3, (x, y))
+            elif player1.boats.count(boot4) < 1:
+                screen.blit(boot4, (x, y))
         elif len(player2.boats) < 4:
             if len(player2.boats) < 1:
                 screen.blit(player2_boot, (x, 637))
-            elif len(player2.boats) < 3:
+            elif len(player2.boats) < 2:
                 screen.blit(player2_boot2, (x, 608))
-            elif player2.boats.count(boot3) < 1:
-                screen.blit(player2_boot3, (x, 579))
+            elif len(player2.boats) < 3:
+                screen.blit(player2_boot3, (x, 608))
+            elif player2.boats.count(boot4) < 1:
+                screen.blit(player2_boot4, (x, 579))
         move_key = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -201,9 +206,9 @@ def intro_game():
                     elif len(player1.boats) < 2:
                         player1.boats.append(Boat(boot2,x,y,3,2,20, 210,2))
                     elif len(player1.boats) < 3:
-                        player1.boats.append(Boat(boot2, x,y,3,3,20, 320,2))
-                    elif player1.boats.count(boot3) < 1:
-                        player1.boats.append(Boat(boot3, x,y,4,4,20, 430,1))
+                        player1.boats.append(Boat(boot3, x,y,3,3,20, 320,2))
+                    elif player1.boats.count(boot4) < 1:
+                        player1.boats.append(Boat(boot4, x,y,4,4,20, 430,1))
             elif len(player2.boats) < 4:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and surface.collidepoint(pygame.mouse.get_pos()):
                     if len(player2.boats) == 0:
@@ -211,9 +216,9 @@ def intro_game():
                     elif len(player2.boats) < 2:
                         player2.boats.append(Boat(player2_boot2,x,608,3,2,1000, 210,2))
                     elif len(player2.boats) < 3:
-                        player2.boats.append(Boat(player2_boot2, x, 608,3,3,1000, 320,2))
-                    elif player2.boats.count(player2_boot3) < 1:
-                        player2.boats.append(Boat(player2_boot3, x, 579,4,4, 1000, 430,1))
+                        player2.boats.append(Boat(player2_boot3, x, 608,3,3,1000, 320,2))
+                    elif player2.boats.count(player2_boot4) < 1:
+                        player2.boats.append(Boat(player2_boot4, x, 579,4,4, 1000, 430,1))
         for boat in player1.boats:
             screen.blit(boat.image,(boat.p_x,boat.p_y), boat.show_state())
         for boat in player2.boats:
@@ -293,7 +298,7 @@ def Game():
         insert_image('back_button.png', 1379, 0)
         insert_image('MenuBackgound.jpg', 0,0)
         button((0, 89, 90), 650, 300, 200, 70, 'button3.png',intro_game, events)
-        button((0, 89, 90), 650, 400, 200, 70, 'button2.png',None, events)
+        button((0, 89, 90), 650, 400, 200, 70, 'button2.png',help, events)
         button((0, 89, 90), 650, 500, 200, 70, 'button1.png',see_highscores,events)
         button((0, 89, 90), 650, 600, 200, 70, 'button4.png',exit, events)
         for event in events:
@@ -324,7 +329,7 @@ def help():
         pygame.display.update()
 
 def rules_page2():
-    rules_pages2 = pygame.image.load('rules2.png')
+    rules_pages2 = pygame.image.load('rules1.png')
     previous_button = pygame.image.load('pijl2.png').get_rect(x=200, y=600)
     exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
     rules = True
