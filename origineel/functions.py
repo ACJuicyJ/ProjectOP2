@@ -52,7 +52,7 @@ class Player:
         self.score = 0
         self.boats = []
     def show_name(self, x, y):
-        screen.blit(font.render(self.name,1,(0,0,0)), (x, y))
+        screen.blit(font.render(self.name,1,(255,255,255)), (x, y))
 
 player1 = Player()
 player2 = Player()
