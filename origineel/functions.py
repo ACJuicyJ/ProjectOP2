@@ -305,6 +305,8 @@ def pause_loop():
 
 def Game():
     Main_menu=True
+    pygame.mixer.music.load('MainMenuTheme.wav')
+    pygame.mixer.music.play(-1)
     while Main_menu:
         events = pygame.event.get()
         insert_image('back_button.png', 1379, 0)
