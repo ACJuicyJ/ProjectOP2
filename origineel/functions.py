@@ -5,7 +5,7 @@ events=pygame.event.get()
 width=1000
 height=1000
 screen=pygame.display.set_mode((width,height))
-
+pygame.mixer.init()
 text_type=pygame.font.get_default_font()
 font = pygame.font.Font(text_type, 25)
 boot= pygame.image.load('Boot-1-offense-mode.png')
@@ -18,6 +18,10 @@ player2_boot3= pygame.image.load('Player-2-Boot-3-offense-mode.png')
 player2_boot4= pygame.image.load('Player-2-Boot-4-offense-mode.png')
 gameboard= pygame.image.load('gameboard.png')
 
+
+pygame.mixer.music.load('MainMenuTheme.wav')
+pygame.mixer.music.play(-1)
+
 def button(color,p_x,p_y,width,height,image,loop, events):
     buttons=pygame.draw.rect(screen,color,[p_x,p_y,width,height])
     if image != None:
@@ -25,7 +29,15 @@ def button(color,p_x,p_y,width,height,image,loop, events):
     pressed = pygame.mouse.get_pressed()
     if loop != None:
         if pressed[0]==1 and buttons.collidepoint(pygame.mouse.get_pos()):
+            if loop == intro_game:
+                pygame.mixer.music.load('StartGameButtonSound.wav')
+                pygame.mixer.music.play(0)
+            if loop == help:
+                pygame.mixer.music.load('uuhhh.wav')
+                pygame.mixer.music.play(0)
             loop()
+
+
     for event in events:
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -36,7 +48,7 @@ def insert_image(image, positionx, positiony):
 
 class Player:
     def __init__(self):
-        self.name = " "
+        self.name = "**"
         self.score = 0
         self.boats = []
     def show_name(self, x, y):
