@@ -168,6 +168,8 @@ def intro_game():
     x = 199
     y = 109
     gameExit = False
+    pygame.mixer.music.load('Elevator_Music.wav')
+    pygame.mixer.music.play(-1)
     while not gameExit:
         surface = pygame.draw.rect(screen, (0, 0, 0), [200, 100, 750, 600])
         screen.blit(gameboard, (0, 0))
@@ -296,11 +298,11 @@ def pause_loop():
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and resume_button.collidepoint(pygame.mouse.get_pos()):
                 pause= False
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
                 player1.name= " "
                 player2.name = " "
                 Game()
-            if event.type == pygame.QUIT:
+            elif event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
 
