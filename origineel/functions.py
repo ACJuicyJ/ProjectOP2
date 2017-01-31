@@ -36,9 +36,6 @@ def button(color, p_x, p_y, width,height, image,loop, events):
             if loop == intro_game:
                 pygame.mixer.music.load('StartGameButtonSound.wav')
                 pygame.mixer.music.play(0)
-            if loop == help:
-                pygame.mixer.music.load('uuhhh.wav')
-                pygame.mixer.music.play(0)
             if loop == see_highscores:
                 pygame.mixer.music.load('highscores_soundtrack.wav')
                 pygame.mixer.music.play(0)
