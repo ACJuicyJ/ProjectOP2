@@ -1,35 +1,38 @@
 import pygame
+# import psycopg2
+# conn = psycopg2.connect("dbname= Project_2_Highscore name = postgres password = 1")
+#cursor = conn.cursor()
 pygame.init()
 pygame.font.init()
-events=pygame.event.get()
-width=1000
-height=1000
-screen=pygame.display.set_mode((width,height))
+events = pygame.event.get()
+width = 1000
+height = 1000
+screen = pygame.display.set_mode((width,height))
 pygame.mixer.init()
-text_type=pygame.font.get_default_font()
+text_type = pygame.font.get_default_font()
 font = pygame.font.Font(text_type, 25)
-boot= pygame.image.load('Boot-1-offense-mode.png')
-boot2= pygame.image.load('Boot-2-offense-mode.png')
-boot3= pygame.image.load('Boot-2.1-offense-mode.png')
-boot4= pygame.image.load('Boot-3-offense-mode.png')
-player2_boot= pygame.image.load('Player-1-Boot-1-offense-mode.png')
-player2_boot2= pygame.image.load('Player-2-Boot-2-offense-mode.png')
-player2_boot3= pygame.image.load('Player-2-Boot-3-offense-mode.png')
-player2_boot4= pygame.image.load('Player-2-Boot-4-offense-mode.png')
-enter_button= pygame.image.load('enter.png')
-gameboard= pygame.image.load('gameboard.png')
+boot = pygame.image.load('Boot-1-offense-mode.png')
+boot2 = pygame.image.load('Boot-2-offense-mode.png')
+boot3 = pygame.image.load('Boot-2.1-offense-mode.png')
+boot4 = pygame.image.load('Boot-3-offense-mode.png')
+player2_boot = pygame.image.load('Player-1-Boot-1-offense-mode.png')
+player2_boot2 = pygame.image.load('Player-2-Boot-2-offense-mode.png')
+player2_boot3 = pygame.image.load('Player-2-Boot-3-offense-mode.png')
+player2_boot4 = pygame.image.load('Player-2-Boot-4-offense-mode.png')
+enter_button = pygame.image.load('enter.png')
+gameboard = pygame.image.load('gameboard.png')
 
 
 pygame.mixer.music.load('MainMenuTheme.wav')
 pygame.mixer.music.play(-1)
 
-def button(color,p_x,p_y,width,height,image,loop, events):
-    buttons=pygame.draw.rect(screen,color,[p_x,p_y,width,height])
+def button(color, p_x, p_y, width,height, image,loop, events):
+    buttons = pygame.draw.rect(screen,color,[p_x, p_y, width, height])
     if image != None:
-        screen.blit(pygame.image.load(image),(p_x,p_y))
+        screen.blit(pygame.image.load(image), (p_x, p_y))
     pressed = pygame.mouse.get_pressed()
     if loop != None:
-        if pressed[0]==1 and buttons.collidepoint(pygame.mouse.get_pos()):
+        if pressed[0] == 1 and buttons.collidepoint(pygame.mouse.get_pos()):
             if loop == intro_game:
                 pygame.mixer.music.load('StartGameButtonSound.wav')
                 pygame.mixer.music.play(0)
@@ -368,7 +371,7 @@ def settings2():
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and enter_choose.collidepoint(pygame.mouse.get_pos()):
                 settings= False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and previous_button.collidepoint(pygame.mouse.get_pos()):
-                settings()
+                settings = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and next_button.collidepoint(pygame.mouse.get_pos()):
                 settings3()
             elif event.type == pygame.QUIT:
@@ -387,18 +390,15 @@ def settings3():
         screen.fill((255,255,255))
         screen.blit(rules_page1,(300,10))
         insert_image('back_button.png', 1379, 0)
-        insert_image('pijl1.png', 1100, 700)
         insert_image('enter.png', 600, 700)
         insert_image('pijl2.png', 200, 700)
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
-                settings= False
+                settings = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and enter_choose.collidepoint(pygame.mouse.get_pos()):
-                settings= False
+                settings = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and previous_button.collidepoint(pygame.mouse.get_pos()):
-                setting2()
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and next_button.collidepoint(pygame.mouse.get_pos()):
-                setting()
+                settings = False
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
