@@ -168,6 +168,8 @@ def intro_game():
     y = 109
     gameExit = False
     while not gameExit:
+        pygame.mixer.music.load('.wav')
+        pygame.mixer.music.play(-1)
         surface = pygame.draw.rect(screen, (0, 0, 0), [200, 100, 750, 600])
         screen.blit(gameboard, (0, 0))
         insert_image('pause_button.png', 1442, 0)
