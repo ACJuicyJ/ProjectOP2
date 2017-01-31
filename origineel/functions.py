@@ -1,7 +1,7 @@
 import pygame
 # import psycopg2
 # conn = psycopg2.connect("dbname= Project_2_Highscore name = postgres password = 1")
-#cursor = conn.cursor()
+# cursor = conn.cursor()
 pygame.init()
 pygame.font.init()
 events = pygame.event.get()
