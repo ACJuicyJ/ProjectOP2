@@ -1,5 +1,5 @@
 import pygame, time
-
+import project_2_database_connection
 pygame.init()
 pygame.font.init()
 events = pygame.event.get()
@@ -31,7 +31,6 @@ enter_button = pygame.image.load('enter.png')
 
 pygame.mixer.music.load('MainMenuTheme.wav')
 pygame.mixer.music.play(-1)
-
 def button(color, p_x, p_y, width,height, image,loop, events):
     buttons = pygame.draw.rect(screen,color,[p_x, p_y, width, height])
     if image != None:
@@ -190,6 +189,7 @@ def choose_name():
                     player1.name += " "
                 elif event.key == pygame.K_RETURN:
                     first_player = False
+                    project_2_database_connection.insert_score(player1.name, 0)
             elif event.type == pygame.KEYDOWN and first_player == False:
                 screen.blit(font.render(player2.name, 1, (0, 0, 0)), (650, 300))
                 if event.unicode.isalpha():
@@ -202,6 +202,7 @@ def choose_name():
                     player2.name += " "
                 elif event.key == pygame.K_RETURN:
                     choose = False
+                    project_2_database_connection.insert_score(player2.name, 0)
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -209,6 +210,7 @@ def choose_name():
         if first_player == True:
             screen.blit(font.render('Player 1: Type your name', 1, (0, 0, 0)), (400, 200))
             screen.blit(font.render(player1.name, 1, (0, 0, 0)), (420, 300))
+
         elif first_player == False:
             screen.blit(font.render('Player 2: Type your name', 1, (0, 0, 0)), (400, 200))
             screen.blit(font.render(player2.name, 1, (0, 0, 0)), (420, 300))
@@ -241,7 +243,6 @@ def intro_game():
     pygame.mixer.music.play(-1)
     gameExit = False
     while not gameExit:
-        print(pygame.mouse.get_pos())
         surface = pygame.draw.rect(screen, (0, 0, 0), [200, 100, 750, 600])
         screen.blit(gameboard, (0, 0))
         insert_image('pause_button.png', 1110, 0)
