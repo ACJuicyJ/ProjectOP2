@@ -403,12 +403,30 @@ def move_boat(color, px, py, h, w, player, boat_x, image):
         print(player.boats[boat_x].playing)
         player.boats[boat_x].move()
 
+def text_objects(text,font, color):
+    textSurface = font.render(text, True, color)
+    return textSurface, textSurface.get_rect()
+
+def screentext(font,size, word, x, y, color):
+    Text = pygame.font.SysFont(font,size)
+    textSurf, textRect = text_objects(word, Text, color)
+    textRect.center = (x), (y)
+    screen.blit(textSurf, textRect)
 
 def see_highscores():
     see_highscores = True
     while see_highscores:
         insert_image('highscore.png', 0, 0)
         insert_image('back_button.png', 1050, 0)
+        stats = project_2_database_connection.display_top_score()
+        heightstat = 260
+        database = project_2_database_connection.display_top_score()
+
+        for stats in database:
+            screentext("Arial", 27, stats[0], 125, heightstat, (0,0,0))
+            screentext("Arial", 27, stats[1], 600, heightstat, (0,0,0))
+            heightstat += 30
+
         exit_button = pygame.image.load('back_button.png').get_rect(x=1050, y=0)
         pygame.display.update()
         for event in pygame.event.get():
@@ -464,7 +482,7 @@ def Game():
 
 
 def help():
-    rules_page1 = pygame.image.load('rules.png')
+    rules_page1 = pygame.image.load('Rules1.png')
     next_button = pygame.image.load('pijl1.png').get_rect(x=1050, y=600)
     exit_button = pygame.image.load('back_button.png').get_rect(x=1000, y=0)
     rules = True
@@ -487,14 +505,16 @@ def help():
 
 
 def rules_page2():
-    rules_pages2 = pygame.image.load('rules2.png')
+    rules_pages2 = pygame.image.load('Rules2.png')
     previous_button = pygame.image.load('pijl2.png').get_rect(x=200, y=600)
+    next_button = pygame.image.load('pijl1.png').get_rect(x=1050, y=600)
     exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
     rules = True
     while rules:
         screen.fill((255, 255, 255))
         screen.blit(rules_pages2, (500, 0))
         insert_image('back_button.png', 1379, 0)
+        insert_image('pijl1.png', 1000, 600)
         insert_image('pijl2.png', 200, 600)
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(
@@ -503,6 +523,32 @@ def rules_page2():
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and previous_button.collidepoint(
                     pygame.mouse.get_pos()):
                 help()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and next_button.collidepoint(
+                    pygame.mouse.get_pos()):
+                rules_page3()
+            elif event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        pygame.display.update()
+
+def rules_page3():
+    rules_pages3 = pygame.image.load('Rules3.png')
+    previous_button = pygame.image.load('pijl2.png').get_rect(x=200, y=600)
+    exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
+    exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
+    rules = True
+    while rules:
+        screen.fill((255, 255, 255))
+        screen.blit(rules_pages3, (500, 0))
+        insert_image('back_button.png', 1379, 0)
+        insert_image('pijl2.png', 200, 600)
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(
+                    pygame.mouse.get_pos()):
+                rules = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and previous_button.collidepoint(
+                    pygame.mouse.get_pos()):
+                rules_page2()
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 quit()

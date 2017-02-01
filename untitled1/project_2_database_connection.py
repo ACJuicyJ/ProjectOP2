@@ -1,55 +1,43 @@
 import psycopg2
-from functions import *
 
 
-def interaction(testing123):
-    print(testing123)
-    # interactie opzetten dmv .cursor
-    conn = psycopg2.connect(" dbname=project_2_highscore user=postgres password = 123456 ")
-    cursor = conn.cursor()
+# Use the database
+def interact_with_database(command):
+    # Connect and set up cursor
+    connection = psycopg2.connect("dbname=project_2_highscore user=postgres password=123456")
+    cursor = connection.cursor()
 
-    cursor.execute(testing123)
-    conn.commit()
+    # Execute the command
+    cursor.execute(command)
+    connection.commit()
 
-    result = None
+    # Save results
+    results = None
     try:
-        result = cursor.fetchall()
+        results = cursor.fetchall()
     except psycopg2.ProgrammingError:
+        # Nothing to fetch
+        pass
 
-        pass #als er geen data is om in te zetten
-
+    # Close connection
     cursor.close()
-    conn.close()
+    connection.close()
 
-    return result
+    return results
 
 
-# Uploads a score into the highscore table
-def upload_score(score, name):
-    interaction("UPDATE highscore SET score = {} WHERE name = '{}'"
+# Uploads a score into the hiscore table
+def upload_score(name, score):
+    interact_with_database("UPDATE score SET score = {} WHERE name = '{}'"
                            .format(score, name))
 
 
-# retrieves scores from database
-def display_scores():
-    return interaction("SELECT * FROM score")
+# Downloads score data from database
+def download_scores():
+    return interact_with_database("SELECT * FROM score")
 
 
-# show highest highscore from database
+# Downloads the top score from database
 def display_top_score():
-    result = interaction("SELECT * FROM score ORDER BY score")[0][1]
+    result = interact_with_database("SELECT * FROM highscore ORDER BY score")
     return result
-
-
-
-def insert_score(name, score):
-    interaction("Insert INTO highscore(score, name) Values ({} , '{}')"
-                           .format(score, name))
-
-#om de correcte database te maken voer de volgende sql syntax in
-#create database project_2_highscore
-# en dan
-#create table highscore(
-#    score integer,
-#    name TEXT
-#);
