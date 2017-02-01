@@ -60,10 +60,11 @@ class Player:
     def __init__(self):
         self.name = " "
         self.boats = []
+        self.score = 0
 
     def show_name(self, x, y):
         screen.blit(font.render(self.name, 1, (255, 255, 255)), (x, y))
-
+        screen.blit(font.render(str(self.score), 1, (255, 255, 255)), (x + 5, y + 30))
 
 player1 = Player()
 player2 = Player()
@@ -189,7 +190,7 @@ def choose_name():
                     player1.name += " "
                 elif event.key == pygame.K_RETURN:
                     first_player = False
-                    project_2_database_connection.insert_score(player1.name, 0)
+                    project_2_database_connection.insert_score(player1.name, player1.score)
             elif event.type == pygame.KEYDOWN and first_player == False:
                 screen.blit(font.render(player2.name, 1, (0, 0, 0)), (650, 300))
                 if event.unicode.isalpha():
@@ -202,7 +203,7 @@ def choose_name():
                     player2.name += " "
                 elif event.key == pygame.K_RETURN:
                     choose = False
-                    project_2_database_connection.insert_score(player2.name, 0)
+                    project_2_database_connection.insert_score(player2.name, player2.score)
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -218,15 +219,15 @@ def choose_name():
         pygame.display.update()
 
 
-def collide(x, x2, player):
+def collide(x, player1, x2, player):
     click = pygame.mouse.get_pressed()
-
     if x.image.get_rect(x=x.p_x, y=x.p_y, ).colliderect(
             x2.image.get_rect(x=x2.p_x, y=x2.p_y, )) and x.attack == True and click[0] == 1 and x2.image.get_rect(
             x=x2.p_x, y=x2.p_y).collidepoint(pygame.mouse.get_pos()):
         pygame.mixer.music.load('CannonSound.wav')
         pygame.mixer.music.play(0)
         x2.health -= 1
+        player1.score += 10
         x.attack = False
         if x2.health == 0:
             insert_image("Current Player 1 Display.png", 400, 400)
@@ -331,22 +332,22 @@ def intro_game():
                 player2.boats[1].attack = True
                 player2.boats[2].attack = True
                 player2.boats[3].attack = True
-                collide(player1.boats[0], player2.boats[0], player2)
-                collide(player1.boats[0], player2.boats[1], player2)
-                collide(player1.boats[0], player2.boats[2], player2)
-                collide(player1.boats[0], player2.boats[3], player2)
-                collide(player1.boats[1], player2.boats[0], player2)
-                collide(player1.boats[1], player2.boats[1], player2)
-                collide(player1.boats[1], player2.boats[2], player2)
-                collide(player1.boats[1], player2.boats[3], player2)
-                collide(player1.boats[2], player2.boats[0], player2)
-                collide(player1.boats[2], player2.boats[1], player2)
-                collide(player1.boats[2], player2.boats[2], player2)
-                collide(player1.boats[2], player2.boats[3], player2)
-                collide(player1.boats[3], player2.boats[0], player2)
-                collide(player1.boats[3], player2.boats[1], player2)
-                collide(player1.boats[3], player2.boats[2], player2)
-                collide(player1.boats[3], player2.boats[3], player2)
+                collide(player1.boats[0], player1,player2.boats[0], player2)
+                collide(player1.boats[0], player1,player2.boats[1], player2)
+                collide(player1.boats[0], player1,player2.boats[2], player2)
+                collide(player1.boats[0], player1,player2.boats[3], player2)
+                collide(player1.boats[1], player1,player2.boats[0], player2)
+                collide(player1.boats[1], player1,player2.boats[1], player2)
+                collide(player1.boats[1], player1,player2.boats[2], player2)
+                collide(player1.boats[1], player1,player2.boats[3], player2)
+                collide(player1.boats[2], player1,player2.boats[0], player2)
+                collide(player1.boats[2], player1,player2.boats[1], player2)
+                collide(player1.boats[2], player1,player2.boats[2], player2)
+                collide(player1.boats[2], player1player2.boats[3], player2)
+                collide(player1.boats[3], player1,player2.boats[0], player2)
+                collide(player1.boats[3], player1,player2.boats[1], player2)
+                collide(player1.boats[3], player1,player2.boats[2], player2)
+                collide(player1.boats[3], player1,player2.boats[3], player2)
                 if player1.boats[0].turn == 0 and player1.boats[1].turn == 0 and player1.boats[2].turn == 0 and \
                                 player1.boats[3].turn == 0:
                     player2.boats[0].turn = player2.boats[0].moves
@@ -365,22 +366,22 @@ def intro_game():
                 player1.boats[1].attack = True
                 player1.boats[2].attack = True
                 player1.boats[3].attack = True
-                collide(player2.boats[0], player1.boats[0], player2)
-                collide(player2.boats[0], player1.boats[1], player2)
-                collide(player2.boats[0], player1.boats[2], player2)
-                collide(player2.boats[0], player1.boats[3], player2)
-                collide(player2.boats[1], player1.boats[0], player2)
-                collide(player2.boats[1], player1.boats[1], player2)
-                collide(player2.boats[1], player1.boats[2], player2)
-                collide(player2.boats[1], player1.boats[3], player2)
-                collide(player2.boats[2], player1.boats[0], player2)
-                collide(player2.boats[2], player1.boats[1], player2)
-                collide(player2.boats[2], player1.boats[2], player2)
-                collide(player2.boats[2], player1.boats[3], player2)
-                collide(player2.boats[3], player1.boats[0], player2)
-                collide(player2.boats[3], player1.boats[1], player2)
-                collide(player2.boats[3], player1.boats[2], player2)
-                collide(player2.boats[3], player1.boats[3], player2)
+                collide(player2.boats[0], player2, player1.boats[0], player2)
+                collide(player2.boats[0], player2,player1.boats[1], player2)
+                collide(player2.boats[0], player2, player1.boats[2], player2)
+                collide(player2.boats[0], player2,player1.boats[3], player2)
+                collide(player2.boats[1], player2,player1.boats[0], player2)
+                collide(player2.boats[1], player2,player1.boats[1], player2)
+                collide(player2.boats[1], player2,player1.boats[2], player2)
+                collide(player2.boats[1], player2,player1.boats[3], player2)
+                collide(player2.boats[2], player2,player1.boats[0], player2)
+                collide(player2.boats[2], player2,player1.boats[1], player2)
+                collide(player2.boats[2], player2,player1.boats[2], player2)
+                collide(player2.boats[2], player2,player1.boats[3], player2)
+                collide(player2.boats[3], player2,player1.boats[0], player2)
+                collide(player2.boats[3], player2,player1.boats[1], player2)
+                collide(player2.boats[3], player2,player1.boats[2], player2)
+                collide(player2.boats[3], player2,player1.boats[3], player2)
                 if player2.boats[0].turn == 0 and player2.boats[1].turn == 0 and player2.boats[2].turn == 0 and \
                                 player2.boats[3].turn == 0:
                     player1.boats[0].turn = player1.boats[0].moves
@@ -508,16 +509,16 @@ def rules_page2():
         pygame.display.update()
 def settings():
     rules_page1 = pygame.image.load('Gameboard 1.1.png')
-    next_button = pygame.image.load('pijl1.png').get_rect(x=1100, y=700)
-    exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
-    enter_choose = pygame.image.load('back_button.png').get_rect(x=600, y=700)
+    next_button = pygame.image.load('pijl1.png').get_rect(x=900, y=700)
+    exit_button = pygame.image.load('back_button.png').get_rect(x=1180, y=0)
+    enter_choose = pygame.image.load('back_button.png').get_rect(x=400, y=700)
     settings = True
     while settings:
         screen.fill((255,255,255))
-        screen.blit(rules_page1,(300,10))
-        insert_image('back_button.png', 1379, 0)
-        insert_image('pijl1.png', 1100, 700)
-        insert_image('enter.png', 600, 700)
+        screen.blit(rules_page1,(100,10))
+        insert_image('back_button.png', 1180, 0)
+        insert_image('pijl1.png', 900, 680)
+        insert_image('enter.png', 400, 680)
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
                 settings= False
