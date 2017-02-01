@@ -1,20 +1,23 @@
 import pygame, time
 pygame.init()
 pygame.font.init()
-events=pygame.event.get()
-width=1000
-height=1000
-screen=pygame.display.set_mode((width,height))
-
-text_type=pygame.font.get_default_font()
+events = pygame.event.get()
+width = 1000
+height = 1000
+screen = pygame.display.set_mode((width,height))
+pygame.mixer.init()
+text_type = pygame.font.get_default_font()
 font = pygame.font.Font(text_type, 25)
-boot= pygame.image.load('Boot-1-offense-mode.png')
-boot2= pygame.image.load('Boot-2-offense-mode.png')
-boot3= pygame.image.load('Boot-3-offense-mode.png')
-player2_boot= pygame.image.load('Player-1-Boot-1-offense-mode.png')
-player2_boot2= pygame.image.load('Player-2-Boot-2-offense-mode.png')
-player2_boot3= pygame.image.load('Player-2-Boot-4-offense-mode.png')
+boot = pygame.image.load('Boot-1-offense-mode.png')
+boot2 = pygame.image.load('Boot-2-offense-mode.png')
+boot3 = pygame.image.load('Boot-3-offense-mode.png')
+player2_boot = pygame.image.load('Player-1-Boot-1-offense-mode.png')
+player2_boot2 = pygame.image.load('Player-2-Boot-2-offense-mode.png')
+player2_boot3 = pygame.image.load('Player-2-Boot-4-offense-mode.png')
 gameboard= pygame.image.load('gameboard.png')
+
+pygame.mixer.music.load('MainMenuTheme.wav')
+pygame.mixer.music.play(-1)
 
 
 def button(color,p_x,p_y,width,height,image,loop, events):
@@ -23,12 +26,15 @@ def button(color,p_x,p_y,width,height,image,loop, events):
         screen.blit(pygame.image.load(image),(p_x,p_y))
     pressed = pygame.mouse.get_pressed()
     if loop != None:
-        if pressed[0]==1 and buttons.collidepoint(pygame.mouse.get_pos()):
+        if pressed[0] == 1 and buttons.collidepoint(pygame.mouse.get_pos()):
+            if loop == intro_game:
+                pygame.mixer.music.load('StartGameButtonSound.wav')
+                pygame.mixer.music.play(0)
+            if loop == see_highscores:
+                pygame.mixer.music.load('highscores_soundtrack.wav')
+                pygame.mixer.music.play(0)
             loop()
-    for event in events:
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
+
 def insert_image(image, positionx, positiony):
     screen.blit(pygame.image.load(image),(positionx,positiony))
 
@@ -289,11 +295,6 @@ def intro_game():
                     player1.boats[2].turn = player1.boats[2].moves
                     player1.boats[3].turn = player1.boats[3].moves
     
-               
-
-
-
-
         pygame.display.flip()
 
 
@@ -402,6 +403,83 @@ def rules_page2():
                 rules= False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and previous_button.collidepoint(pygame.mouse.get_pos()):
                 help()
+            elif event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        pygame.display.update()
+
+def settings():
+    rules_page1 = pygame.image.load('Gameboard 1.1.png')
+    next_button = pygame.image.load('pijl1.png').get_rect(x=1100, y=700)
+    exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
+    enter_choose = pygame.image.load('back_button.png').get_rect(x=600, y=700)
+    settings = True
+    while settings:
+        screen.fill((255,255,255))
+        screen.blit(rules_page1,(300,10))
+        insert_image('back_button.png', 1379, 0)
+        insert_image('pijl1.png', 1100, 700)
+        insert_image('enter.png', 600, 700)
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
+                settings= False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and enter_choose.collidepoint(pygame.mouse.get_pos()):
+                settings= False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and next_button.collidepoint(pygame.mouse.get_pos()):
+                settings2()
+            elif event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        pygame.display.update()
+
+def settings2():
+    rules_page1 = pygame.image.load('Gameboard 2.1.png')
+    next_button = pygame.image.load('pijl1.png').get_rect(x=1100, y=700)
+    exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
+    enter_choose = pygame.image.load('back_button.png').get_rect(x=600, y=700)
+    previous_button = pygame.image.load('pijl2.png').get_rect(x=200, y=700)
+    settings = True
+    while settings:
+        screen.fill((255,255,255))
+        screen.blit(rules_page1,(300,10))
+        insert_image('back_button.png', 1379, 0)
+        insert_image('pijl1.png', 1100, 700)
+        insert_image('enter.png', 600, 700)
+        insert_image('pijl2.png', 200, 700)
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
+                settings= False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and enter_choose.collidepoint(pygame.mouse.get_pos()):
+                settings= False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and previous_button.collidepoint(pygame.mouse.get_pos()):
+                settings = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and next_button.collidepoint(pygame.mouse.get_pos()):
+                settings3()
+            elif event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        pygame.display.update()
+
+def settings3():
+    rules_page1 = pygame.image.load('Gameboard 3.1.png')
+    next_button = pygame.image.load('pijl1.png').get_rect(x=1100, y=700)
+    exit_button = pygame.image.load('back_button.png').get_rect(x=1379, y=0)
+    enter_choose = pygame.image.load('back_button.png').get_rect(x=600, y=700)
+    previous_button = pygame.image.load('pijl2.png').get_rect(x=200, y=700)
+    settings = True
+    while settings:
+        screen.fill((255,255,255))
+        screen.blit(rules_page1,(300,10))
+        insert_image('back_button.png', 1379, 0)
+        insert_image('enter.png', 600, 700)
+        insert_image('pijl2.png', 200, 700)
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and exit_button.collidepoint(pygame.mouse.get_pos()):
+                settings = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and enter_choose.collidepoint(pygame.mouse.get_pos()):
+                settings = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and previous_button.collidepoint(pygame.mouse.get_pos()):
+                settings = False
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
